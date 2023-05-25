@@ -10,14 +10,6 @@ pipeline {
             }
         }
         
-     stage('Checkout') {
-     steps {
-         // Checkout the Git repository
-            git branch: "*/main", 
-            credentialsId: 'github', 
-            url: 'https://github.com/Pradeepde97/pipeline'
-          }
-        }
         stage('checkout') {
             steps {
                git url: 'https://github.com/Pradeepde97/pipeline',credentialsId: 'github', branch: "${params.Branch}"
@@ -42,3 +34,4 @@ pipeline {
     }
   }
 }
+
