@@ -1,5 +1,4 @@
 properties([parameters([choice(choices: ['main', 'dila'], description: 'Git Branch List', name: 'Branch')])])
-
 pipeline {
     agent any
 
