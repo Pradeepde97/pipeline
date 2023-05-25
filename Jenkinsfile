@@ -9,7 +9,15 @@ pipeline {
                 echo 'EK-NDC-UAT Pipeline'
             }
         }
-
+        
+     stage('Checkout') {
+     steps {
+         // Checkout the Git repository
+            git branch: "*/main", 
+            credentialsId: 'github', 
+            url: 'https://github.com/Pradeepde97/pipeline'
+          }
+        }
         stage('checkout') {
             steps {
                git url: 'https://github.com/Pradeepde97/pipeline',credentialsId: 'github', branch: "${params.Branch}"
@@ -22,7 +30,6 @@ pipeline {
             ssh -o StrictHostKeyChecking=no test@192.168.8.111 << EOF
             sudo -i
             cd /home/test/pipeline
-            git pull origin ${params.Branch}
 			docker system prune -a -f
             git pull origin ${params.Branch}
 			make ENV=UAT rebuild
@@ -35,3 +42,4 @@ pipeline {
     }
   }
 }
+
