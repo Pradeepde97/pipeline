@@ -1,5 +1,8 @@
 properties([parameters([choice(choices: ['main', 'dila'], description: 'Git Branch List', name: 'Branch')])])
+<<<<<<< HEAD
 
+=======
+>>>>>>> e4a84599b4cac3f78bf37d36a29af4ac0a0fe6cf
 pipeline {
     agent any
 
@@ -10,6 +13,17 @@ pipeline {
             }
         }
         
+<<<<<<< HEAD
+=======
+     stage('Checkout') {
+     steps {
+         // Checkout the Git repository
+            git branch: "*/main", 
+            credentialsId: 'github', 
+            url: 'https://github.com/Pradeepde97/pipeline'
+          }
+        }
+>>>>>>> e4a84599b4cac3f78bf37d36a29af4ac0a0fe6cf
         stage('checkout') {
             steps {
                git url: 'https://github.com/Pradeepde97/pipeline',credentialsId: 'github', branch: "${params.Branch}"
@@ -34,4 +48,7 @@ pipeline {
     }
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> e4a84599b4cac3f78bf37d36a29af4ac0a0fe6cf
