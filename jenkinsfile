@@ -42,7 +42,7 @@ pipeline {
         // This stage will execute after all branches have been checked out
         sshagent(['newjenkin']) {
           sh  """
-            ssh -o StrictHostKeyChecking=no test@192.168.8.111 << EOF
+            ssh -o StrictHostKeyChecking=no test@192.168.8.112 << EOF
             sudo -i
             cd /home/test/pipeline
             docker system prune -a -f
