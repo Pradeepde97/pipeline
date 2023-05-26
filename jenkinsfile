@@ -17,8 +17,7 @@ pipeline {
             echo "Done with branch: $branch"
           }
         }
-      }
-    }
+      
     
     stage('deployment') {
       steps {
@@ -39,5 +38,6 @@ pipeline {
         }
       }
     }
+  }
   }
 
