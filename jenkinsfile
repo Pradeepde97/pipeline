@@ -1,0 +1,59 @@
+properties([
+  parameters([
+    choice(choices: ['main', 'dila'], description: 'Git Branch List', name: 'Branch')
+  ])
+])
+
+pipeline {
+  agent any
+
+  stages {
+    stage('1st Ticket') {
+      steps {
+        echo 'EK-NDC-UAT Pipeline'
+      }
+    }
+    
+    stage('checkout') {
+      steps {
+        script {
+          // Get a list of all branches in the repository
+          def branchList = sh(
+            returnStdout: true,
+            script: "git ls-remote --heads origin | awk -F 'refs/heads/' '{print \$2}'"
+          ).trim().split('\n')
+          
+          // Iterate over each branch and perform checkout
+          for (def branch in branchList) {
+            echo "Checking out branch: $branch"
+            git url: 'https://github.com/Pradeepde97/pipeline', credentialsId: 'github', branch: branch
+            
+            // Add your deployment steps here for each branch if needed
+            
+            echo "Done with branch: $branch"
+          }
+        }
+      }
+    }
+    
+    stage('deployment') {
+      steps {
+        // Add your deployment steps here if needed
+        // This stage will execute after all branches have been checked out
+        sshagent(['newjenkin']) {
+          sh  """
+            ssh -o StrictHostKeyChecking=no test@192.168.8.112 << EOF
+            sudo -i
+            cd /home/test/pipeline
+            docker system prune -a -f
+            git pull origin ${params.Branch}
+            make ENV=UAT rebuild
+            exit
+            exit
+            exit
+            EOF"""
+        }
+      }
+    }
+  }
+}
