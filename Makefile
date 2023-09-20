@@ -1,6 +1,6 @@
 IMAGE=helloapp
 CONTAINER=helloapp-container
-PORT=80
+PORT=81
 
 build-container:
 	echo "Initiating Docker build..."
